@@ -27,6 +27,7 @@ namespace Blog
 
             services.AddScoped<AddPostService>();
             services.AddScoped<FindAllPostService>();
+            services.AddScoped<CalculatePopularPostsService>();
 
             services.AddDbContext<PostContext>(options => options.UseInMemoryDatabase(databaseName: "blog"));
         }
