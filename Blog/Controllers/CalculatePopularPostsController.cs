@@ -15,7 +15,7 @@ namespace Blog.Controllers
             this.calculateSimilarPostsService = calculateSimilarPostsService;
         }
 
-        [HttpGet("calculate-popular-posts/{maxPosts}")]
+        [HttpPost("calculate-popular-posts/{maxPosts}")]
         public JsonResult Calculate([FromBody] PopularPostsDTO popularPostsDTO, int maxPosts)
         {
             return Json(calculateSimilarPostsService.CalculatePopularPosts(popularPostsDTO, maxPosts));

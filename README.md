@@ -28,8 +28,8 @@
 
 #### Calculate popular post
 
-**HTTP method**: GET
-**URL**: /api/calculate-popular-posts/{max-result}
+**HTTP method**: POST
+**URL**: /api/calculate-popular-posts/{maxPosts}
 **Example URL**: /api/calculate-popular-posts/3
 **Body**:
 ```json
