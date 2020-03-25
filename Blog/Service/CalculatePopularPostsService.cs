@@ -13,8 +13,14 @@ namespace Blog.Service
 
         public IDictionary<string, double> CalculatePopularPosts(PopularPostsDTO popularPostsDTO, int maxPosts)
         {
-            PostStatisticsDTO[] postStatisticsDTOs = popularPostsDTO.PostsStatistics;
             IDictionary<string, double> postsProbability = new Dictionary<string, double>();
+
+            if (maxPosts <= 0)
+            {
+                return postsProbability;
+            }
+
+            PostStatisticsDTO[] postStatisticsDTOs = popularPostsDTO.PostsStatistics;
 
             int allViews = postStatisticsDTOs.Sum(postStatistics => postStatistics.Views);
             int allConversion = postStatisticsDTOs.Sum(postStatistics => postStatistics.Conversions);
@@ -84,7 +90,6 @@ namespace Blog.Service
         private IDictionary<string, double> GetResultProbability(IDictionary<string, double> postsProbability, int limit)
         {
             IDictionary<string, double> result = new Dictionary<string, double>();
-            int i = 1;
 
             var sortPostsProbability = from postProbability in postsProbability
                                        orderby postProbability.Value descending
@@ -95,12 +100,10 @@ namespace Blog.Service
             {
                 result.Add(postProbability.Key, postProbability.Value);
 
-                if (i >= limit)
+                if (result.Count() >= limit)
                 {
                     break;
                 }
-
-                ++i;
             }
 
             return result;
