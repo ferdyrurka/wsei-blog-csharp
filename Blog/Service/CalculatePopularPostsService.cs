@@ -32,7 +32,7 @@ namespace Blog.Service
                 postsProbability.Add(postStatitsticDTO.PostId, postProbability);
             }
 
-            return GetSortProbability(postsProbability, maxPosts);
+            return GetResultProbability(postsProbability, maxPosts);
         }
 
         private double CalculatePostProbability(
@@ -40,7 +40,8 @@ namespace Blog.Service
             int allConversions,
             double allReadTime,
             PostStatisticsDTO postStatisticsDTO
-        ) {
+        )
+        {
             if (allViews <= 0 || allReadTime <= 0)
             {
                 return 0;
@@ -61,14 +62,14 @@ namespace Blog.Service
 
         private double CalculateViewsProbability(int postViews, int allViews)
         {
-            double probability = (double) postViews / allViews;
+            double probability = (double)postViews / allViews;
 
             return probability * VALUE_PROBABILITY_VIEWS;
         }
 
         private double CalculateConversionProbability(int postConversions, int allConversions)
         {
-            double probability = (double) postConversions / allConversions;
+            double probability = (double)postConversions / allConversions;
 
             return probability * VALUE_PROBABILITY_CONVERSIONS;
         }
@@ -80,13 +81,14 @@ namespace Blog.Service
             return probability * VALUE_PROBABILITY_READ_TIME;
         }
 
-        private IDictionary<string, double> GetSortProbability(IDictionary<string, double>  postsProbability, int limit)
+        private IDictionary<string, double> GetResultProbability(IDictionary<string, double> postsProbability, int limit)
         {
             IDictionary<string, double> result = new Dictionary<string, double>();
             int i = 1;
 
             var sortPostsProbability = from postProbability in postsProbability
-                orderby postProbability.Value descending select postProbability
+                                       orderby postProbability.Value descending
+                                       select postProbability
             ;
 
             foreach (KeyValuePair<string, double> postProbability in sortPostsProbability)
